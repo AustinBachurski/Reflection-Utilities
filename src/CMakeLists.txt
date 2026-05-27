@@ -1,12 +1,14 @@
-add_library(example_lib INTERFACE)
+add_library(ReflUtils INTERFACE)
 
-target_sources(example_lib INTERFACE
+target_sources(ReflUtils INTERFACE
     FILE_SET HEADERS
     BASE_DIRS
     "${PROJECT_SOURCE_DIR}/include"
 
     FILES
-    #"${PROJECT_SOURCE_DIR}/include/Example_Lib/example.hpp"
+    "${PROJECT_SOURCE_DIR}/include/ReflUtils/annotations/annotations.hpp"
+    "${PROJECT_SOURCE_DIR}/include/ReflUtils/checked_enum_cast/checked_enum_cast.hpp"
+    "${PROJECT_SOURCE_DIR}/include/ReflUtils/debug_formatter/debug_formatter.hpp"
 )
 
 add_executable(example)
@@ -15,7 +17,7 @@ target_sources(example PRIVATE
     main.cpp
 )
 
-target_link_libraries(example PRIVATE example_lib)
+target_link_libraries(example PRIVATE ReflUtils)
 
 enable_warnings_for_target(example)
 
