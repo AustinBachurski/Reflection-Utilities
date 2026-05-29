@@ -19,11 +19,9 @@ consteval auto is_annotated_with(std::meta::info reflected,
 
 } // namespace ReflUtils
 
-namespace std {
-
 template <typename T>
   requires(ReflUtils::is_annotated_with(^^T, ReflUtils::debug_formatter))
-struct formatter<T> {
+struct std::formatter<T> {
   constexpr auto parse(std::format_parse_context &context) {
     return context.begin();
   }
@@ -48,7 +46,5 @@ struct formatter<T> {
     return out;
   }
 };
-
-} // namespace std
 
 #endif
