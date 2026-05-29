@@ -1,4 +1,4 @@
-# CPP-Project-Template
-Baseline template for C++ projects with CMake pre-configured.
+# Reflection Utilities
+Learning C++26 reflection and trying to make some useful utilities.
 
-!["A diseased rat missing his foot from a C++ footgun looks into the mirror of C++26 reflection."](images/reflection.png)
+!["A diseased rat missing his foot from a C++ footgun looks into the mirror of C++26 reflection, seeing the gentleman-rat he could be."](images/reflection.png)
