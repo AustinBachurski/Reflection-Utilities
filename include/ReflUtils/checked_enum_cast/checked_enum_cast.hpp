@@ -14,8 +14,10 @@ namespace ReflUtils {
 template <typename ScopedEnum, std::integral Integral>
   requires std::is_scoped_enum_v<ScopedEnum>
 constexpr ScopedEnum checked_enum_cast(Integral value) {
-  template for (constexpr auto enum_value : std::define_static_array(
-                    std::meta::enumerators_of(^^ScopedEnum))) {
+  static constexpr auto enum_values{
+      std::define_static_array(std::meta::enumerators_of(^^ScopedEnum))};
+
+  template for (constexpr auto enum_value : enum_values) {
     if (std::cmp_equal(std::to_underlying([:enum_value:]), value)) {
       return [:enum_value:];
     }
@@ -24,11 +26,11 @@ constexpr ScopedEnum checked_enum_cast(Integral value) {
   if consteval {
     throw std::out_of_range("In call to 'checked_enum_cast<ENUM>(VALUE)' "
                             "-- VALUE is not a valid member of ENUM.");
-  } else {
-    throw std::out_of_range(std::format(
-        "The numeric value '{}' is not a valid member of scoped enum '{}'.",
-        value, std::meta::identifier_of(^^E)));
   }
+
+  throw std::out_of_range(std::format(
+      "The numeric value '{}' is not a valid member of scoped enum '{}'.",
+      value, std::meta::identifier_of(^^ScopedEnum)));
 }
 
 } // namespace ReflUtils

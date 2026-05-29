@@ -9,6 +9,7 @@ target_sources(ReflUtils INTERFACE
     "${PROJECT_SOURCE_DIR}/include/ReflUtils/annotations/annotations.hpp"
     "${PROJECT_SOURCE_DIR}/include/ReflUtils/checked_enum_cast/checked_enum_cast.hpp"
     "${PROJECT_SOURCE_DIR}/include/ReflUtils/debug_formatter/debug_formatter.hpp"
+    "${PROJECT_SOURCE_DIR}/include/ReflUtils/string_of_enum/string_of_enum.hpp"
 )
 
 add_executable(example)
