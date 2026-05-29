@@ -36,7 +36,7 @@ struct std::formatter<T> {
 
     template for (constexpr auto member : members) {
       out = std::format_to(
-          out, "  {} {}={}\n",
+          out, "  {} {} = {}\n",
           std::meta::display_string_of(^^decltype(object.[:member:])),
           std::meta::identifier_of(member), object.[:member:]);
     }
