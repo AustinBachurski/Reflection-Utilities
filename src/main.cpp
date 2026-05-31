@@ -3,6 +3,8 @@
 #include "ReflUtils/debug_formatter/debug_formatter.hpp"
 #include "ReflUtils/string_of_enum/string_of_enum.hpp"
 
+#include <iostream>
+#include <meta>
 #include <print>
 #include <string>
 #include <string_view>
@@ -25,13 +27,33 @@ enum class Values {
   Three,
 };
 
+template <typename T>
+  requires std::is_scoped_enum_v<T>
+constexpr void print_enum_values() {
+  static constexpr auto members{
+      std::define_static_array(std::meta::enumerators_of(^^T))};
+
+  std::println("Enum Class: {}", std::meta::display_string_of(^^T));
+
+  template for (constexpr auto member : members) {
+    std::println("  {}", std::meta::identifier_of(member));
+  }
+}
+
 auto main() -> int {
+  std::println("** Print an object annotated with `debug_formatter`. **");
   Object thing;
   std::println("{}", thing);
 
-  constexpr auto three{ReflUtils::checked_enum_cast<Values>(0)};
+  std::println("\n** Print the values of an enum class. **");
+  print_enum_values<Values>();
 
-  std::println("Enum: {}", ReflUtils::string_of_enum(three));
+  std::println("\n** Cast a valid integer to the enum type. **");
+
+  constexpr auto zero{ReflUtils::checked_enum_cast<Values>(0)};
+  std::println("Enum: {}", ReflUtils::string_of_enum(zero));
+
+  std::println("\n** Cast an invalid integer to an enum type. **");
 
   try {
     [[maybe_unused]] auto five{ReflUtils::checked_enum_cast<Values>(5)};
